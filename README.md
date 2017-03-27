@@ -59,6 +59,7 @@ Let's say we detect these boxes:
 ![boxes](output_images/boxes.jpg)
 
 Now we create a binary image of the same shape as input. For each pixel in a detected box, increase its value by 1. Then, we put a threshold on the pixels to isolate detected vehicles. Finally, we can use the amazing function `ndimage.measurements.label()` to mark individual cars! This is the final stage of our labeled heatmap, but I've also put a preliminary heatmap in the final video as well.
+
 ![labels](output_images/labels.jpg)
 
 After this, we can now draw boxes around the cars much more easily:
