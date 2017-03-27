@@ -17,11 +17,11 @@ Please watch it [here](https://youtu.be/_gABwOYefnc)!
 ### Solution Design and Approach
 **Note**: All the portions mentioned below are within the same python notebook, [notebook.ipynb](notebook.ipynb)
 
-##### Visualizing the dataset
+#### Visualizing the dataset
 Here is an exploration of the training images provided by Udacity:
 ![Images](output_images/visualize.jpg) 
 
-##### Features
+#### Features
 I tried different color spaces for extracting the 'best' data. Here are three major things that I spent the most time on:
 
 1. YCrCb color space
@@ -34,26 +34,28 @@ I tried different color spaces for extracting the 'best' data. Here are three ma
 3. HOG features: For HOG, I tried VARIOUS combinations of parameters. By hit and trial, the worst seemed to be RGB and the best results came from YCrCb color space, 12 orientations, 8 pixels per cell, and 2 cells per block.
 ![hog](output_images/HOG_visualization.jpg)
 
-##### Training a model
+#### Training models
 I spent most of my time monkeying around with different ways to build a model. I show 3 different models in [my notebook](notebook.ipynb), and the final output is obtained using a LinearSVC classifier with scaled and normalized input features.
 
-Model1: LinearSVC classifier
-Model2: Convolutional Neural Network using Histogram Equalized Images
-Model3: Deep Neural Network exclusively using HOG features
+Model1: **LinearSVC classifier**: A simple classifier which worked very efficiently because of the nature of my data. It reached the highest accuracy out of all the models I tried, and works well on the final video. However, its drawback *in this project* was that it was too difficult to combine with other models like neural networks. In another attempt, I would try using the multilayer perceptron classifier. 
+
+Model2: **Convolutional Neural Network** I trained it using histogram-equalized images. The results were excellent sometimes, but generated waaay too many false positives under tree shadows. However, it worked beautifully on detecting cars under bridges and in sudden glimmers of sunlight, as well as cars which were very far away.
+
+Model3: Deep Neural Network exclusively using HOG features: It works well when combined with another convolutional layer, to get the best of both worlds.
 
 To see the architecture, please see the notebook.
 
-##### Sliding Windows
+#### Sliding Windows
 My personal sliding windows function finds grids three times each for 3 different sizes: 64x64, 128x128 and 192x192, as drawn by the `slide_window2()` function. But eventually for simplicity, I used a simple grid of 128x128 pixels:
 ![grid](output_images/grid.jpg)
 
-##### Detecting Vehicles in Images
+#### Detecting Vehicles in Images
 There are two functions in the project to detect vehicles, one uses a combination of 2 deep neural networks (`search_windows_new()`) and the other uses the LinearSVC classifer (`find_cars()`).
 
 The neural network created waay too many false positives when run on the final image, AND it was very inefficient because I couldn't figure out how to subsample the HOG features:
 ![neural output](output_images/neural_network.jpg)
 
-##### Drawing a heatmap
+#### Drawing a heatmap
 Let's say we detect these boxes:
 
 ![boxes](output_images/boxes.jpg)
