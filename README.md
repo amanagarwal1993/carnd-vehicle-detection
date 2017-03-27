@@ -25,6 +25,7 @@ Here is an exploration of the training images provided by Udacity:
 I tried different color spaces for extracting the 'best' data. Here are three major things that I spent the most time on:
 
 1. YCrCb color space
+
 ![ycrcb](output_images/exploration.jpg)
 
 2. Histogram Equalization: For this I tried two different methods, `cv2.equalizeHist()` and `skimage.exposure.equalize_adapthist()`. Regular equalization worked better than an adaptive one.
@@ -54,6 +55,7 @@ The neural network created waay too many false positives when run on the final i
 
 ##### Drawing a heatmap
 Let's say we detect these boxes:
+
 ![boxes](output_images/boxes.jpg)
 
 Now we create a binary image of the same shape as input. For each pixel in a detected box, increase its value by 1. Then, we put a threshold on the pixels to isolate detected vehicles. Finally, we can use the amazing function `ndimage.measurements.label()` to mark individual cars! This is the final stage of our labeled heatmap, but I've also put a preliminary heatmap in the final video as well.
